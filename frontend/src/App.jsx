@@ -1,5 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import Navbar from './components/Navbar.jsx'
+import Setup from './pages/Setup.jsx'
 
 function App() {
   return (
@@ -13,7 +14,7 @@ function App() {
           {/* Default route: send users to dashboard */}
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
           {/* Placeholder routes for upcoming pages */}
-          <Route path="/setup" element={<div>Setup Page</div>} />
+          <Route path="/setup" element={<Setup />} />
           <Route path="/expenses" element={<div>Expenses Page</div>} />
           <Route path="/dashboard" element={<div>Dashboard Page</div>} />
         </Routes>
