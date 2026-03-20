@@ -1,15 +1,24 @@
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import Navbar from './components/Navbar.jsx'
+
 function App() {
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg shadow-xl border-t-4 border-green-500">
-        <h1 className="text-3xl font-bold text-gray-800">
-          Safe-to-Spend 💰
-        </h1>
-        <p className="text-gray-600 mt-2">
-          Tailwind is officially working!
-        </p>
-      </div>
-    </div>
+    <BrowserRouter>
+      {/* Shared top navigation */}
+      <Navbar />
+
+      {/* Page content area */}
+      <main className="p-6">
+        <Routes>
+          {/* Default route: send users to dashboard */}
+          <Route path="/" element={<Navigate to="/dashboard" replace />} />
+          {/* Placeholder routes for upcoming pages */}
+          <Route path="/setup" element={<div>Setup Page</div>} />
+          <Route path="/expenses" element={<div>Expenses Page</div>} />
+          <Route path="/dashboard" element={<div>Dashboard Page</div>} />
+        </Routes>
+      </main>
+    </BrowserRouter>
   )
 }
 
