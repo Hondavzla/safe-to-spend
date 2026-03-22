@@ -204,23 +204,28 @@ function Dashboard() {
           className="bg-gradient-to-r from-teal-500 to-blue-600 rounded-2xl p-8 animate-fade-in-up"
           style={{ animationDelay: '0ms' }}
         >
-          <p className="text-sm text-white/80">Available to Spend</p>
-          <h1 className="text-5xl font-bold text-white mt-2">
+          <p className="text-base text-white/90">Available to Spend</p>
+          <h1
+            className="text-6xl font-extrabold text-white mt-2"
+            style={{ textShadow: '0 2px 12px rgba(0,0,0,0.25)' }}
+          >
             {fmt(dashboard.remaining_safe_to_spend)}
           </h1>
 
-          <div className="mt-3 flex items-center text-white/90 text-sm">
-            <span>Resets in {daysLeft} days</span>
-            <span
-              className={`text-xs font-bold px-2 py-1 rounded-full ml-2 ${getStatusClasses(dashboard.status)}`}
-            >
-              {dashboard.status}
-            </span>
-          </div>
+          <div className="border-t border-white/20 mt-4 pt-3">
+            <div className="flex items-center text-white/90 text-sm">
+              <span>Resets in {daysLeft} days</span>
+              <span
+                className={`text-xs font-bold px-2 py-1 rounded-full ml-2 ${getStatusClasses(dashboard.status)}`}
+              >
+                {dashboard.status}
+              </span>
+            </div>
 
-          <p className="text-sm text-white/80 mt-3">
-            Safe to spend today: {fmt(dashboard.safe_daily_spend)}/day
-          </p>
+            <p className="text-sm text-white/80 mt-3">
+              Safe to spend today: {fmt(dashboard.safe_daily_spend)}/day
+            </p>
+          </div>
         </div>
 
         {/* Section 2: Two-column chart + summary layout */}
@@ -301,6 +306,13 @@ function Dashboard() {
           >
             <h2 className="text-white font-bold text-lg mb-4">Budget Status</h2>
 
+            <div className="bg-gray-900 rounded-xl p-3 mb-4">
+              <p className="text-gray-400 text-xs">Total Spent This Month</p>
+              <p className="text-2xl font-bold text-orange-400 mt-1">
+                {fmt(dashboard.total_spent)}
+              </p>
+            </div>
+
             <div className="flex items-center justify-between py-3 border-b border-gray-700">
               <p className="text-gray-300 text-sm">Savings Goal</p>
               <span className="bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full">
@@ -331,6 +343,13 @@ function Dashboard() {
               <p className="text-gray-300 text-sm">Daily Budget</p>
               <p className="text-teal-400 font-semibold text-sm">
                 {fmt(dashboard.safe_daily_spend)}/day remaining
+              </p>
+            </div>
+
+            <div className="mt-4 pt-4 border-t border-gray-700">
+              <p className="text-gray-400 text-xs">Money After Bills</p>
+              <p className="text-lg font-bold text-white mt-1">
+                {fmt(dashboard.money_after_bills)}
               </p>
             </div>
           </div>
