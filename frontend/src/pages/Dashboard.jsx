@@ -198,7 +198,7 @@ function Dashboard() {
 
   return (
     <div className="bg-gray-950 min-h-screen -m-6 p-6">
-      <div className="max-w-4xl mx-auto px-4 py-8 space-y-6">
+      <div className="w-full max-w-screen-2xl mx-auto px-4 py-8 space-y-6">
         {/* Section 1: Hero banner */}
         <div
           className="bg-gradient-to-r from-teal-500 to-blue-600 rounded-2xl p-8 animate-fade-in-up"
@@ -223,121 +223,117 @@ function Dashboard() {
           </p>
         </div>
 
-        {/* Section 2: Summary cards */}
-        <div
-          className="grid grid-cols-2 gap-4 animate-fade-in-up"
-          style={{ animationDelay: '100ms' }}
-        >
-          <div className="bg-gray-800 rounded-2xl p-5">
-            <p className="text-gray-400 text-sm">Monthly Income</p>
-            <p className="text-2xl font-bold text-white mt-1">
-              {fmt(dashboard.monthly_income)}
-            </p>
+        {/* Section 2: Two-column chart + summary layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div
+            className="bg-gray-800 rounded-2xl p-6 border border-gray-700 animate-fade-in-up"
+            style={{ animationDelay: '100ms' }}
+          >
+            <h2 className="text-white font-bold mb-4">Spending by Category</h2>
+            <div className="rounded-xl bg-gray-900 p-4" style={{ height: '280px' }}>
+              <Doughnut data={doughnutData} options={doughnutOptions} />
+            </div>
           </div>
 
-          <div className="bg-gray-800 rounded-2xl p-5">
-            <p className="text-gray-400 text-sm">Savings Target</p>
-            <p className="text-2xl font-bold text-teal-400 mt-1">
-              {fmt(dashboard.savings_target)}
-            </p>
-          </div>
+          <div
+            className="bg-gray-800 rounded-2xl p-6 border border-gray-700 animate-fade-in-up"
+            style={{ animationDelay: '150ms' }}
+          >
+            <h2 className="text-white font-bold mb-4">Budget Breakdown</h2>
+            <div className="rounded-xl bg-gray-900 p-4" style={{ height: '180px' }}>
+              <Bar data={barData} options={barOptions} />
+            </div>
 
-          <div className="bg-gray-800 rounded-2xl p-5">
-            <p className="text-gray-400 text-sm">Total Spent</p>
-            <p className="text-2xl font-bold text-orange-400 mt-1">
-              {fmt(dashboard.total_spent)}
-            </p>
-          </div>
-
-          <div className="bg-gray-800 rounded-2xl p-5">
-            <p className="text-gray-400 text-sm">Safe Daily Spend</p>
-            <p className="text-2xl font-bold text-blue-400 mt-1">
-              {fmt(dashboard.safe_daily_spend)}/day
-            </p>
+            <div className="grid grid-cols-2 gap-3 mt-4">
+              <div className="bg-gray-900 rounded-xl p-3">
+                <p className="text-gray-400 text-xs">Monthly Income</p>
+                <p className="text-lg font-bold text-white mt-1">
+                  {fmt(dashboard.monthly_income)}
+                </p>
+              </div>
+              <div className="bg-gray-900 rounded-xl p-3">
+                <p className="text-gray-400 text-xs">Savings Target</p>
+                <p className="text-lg font-bold text-teal-400 mt-1">
+                  {fmt(dashboard.savings_target)}
+                </p>
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Section 3: Chart carousel */}
-        <div
-          className="bg-gray-800 rounded-2xl p-6 border border-gray-700 animate-fade-in-up"
-          style={{ animationDelay: '200ms' }}
-        >
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-white font-bold">Spending Overview</h2>
-            <p className="text-white font-bold">{chartIndex + 1}/2</p>
-          </div>
+        {/* Section 3: Recent activity + budget status */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div
+            className="bg-gray-800 rounded-2xl p-6 lg:col-span-2 animate-fade-in-up"
+            style={{ animationDelay: '200ms' }}
+          >
+            <h2 className="text-white font-bold text-lg mb-4">Recent Activity</h2>
 
-          <div className="rounded-xl bg-gray-900 p-4" style={{ height: '300px' }}>
-            {chartIndex === 0 ? (
-              <Doughnut data={doughnutData} options={doughnutOptions} />
+            {recentExpenses.length === 0 ? (
+              <p className="text-gray-400">No expenses yet.</p>
             ) : (
-              <Bar data={barData} options={barOptions} />
+              recentExpenses.map((expense) => (
+                <div
+                  key={expense.id}
+                  className="flex justify-between items-center py-3 border-b border-gray-700 last:border-0"
+                >
+                  <div>
+                    <p className="text-white font-semibold">{expense.category}</p>
+                    <p className="text-gray-400 text-sm">{expense.date}</p>
+                  </div>
+
+                  <div className="text-right">
+                    <p className="text-orange-400 font-semibold">
+                      -{fmt(expense.amount)}
+                    </p>
+                    {expense.note ? (
+                      <p className="text-gray-500 text-xs">{expense.note}</p>
+                    ) : null}
+                  </div>
+                </div>
+              ))
             )}
           </div>
 
-          <div className="mt-5 flex items-center justify-center gap-3">
-            <button
-              type="button"
-              onClick={() => setChartIndex((chartIndex - 1 + 2) % 2)}
-              className="text-gray-400 hover:text-teal-400 text-2xl transition px-2"
-            >
-              ←
-            </button>
+          <div
+            className="bg-gray-800 rounded-2xl p-6 animate-fade-in-up"
+            style={{ animationDelay: '250ms' }}
+          >
+            <h2 className="text-white font-bold text-lg mb-4">Budget Status</h2>
 
-            <button
-              type="button"
-              onClick={() => setChartIndex(0)}
-              className={`rounded-full transition ${chartIndex === 0 ? 'bg-white w-3 h-3' : 'bg-gray-600 w-2 h-2'}`}
-              aria-label="Show first chart"
-            />
-            <button
-              type="button"
-              onClick={() => setChartIndex(1)}
-              className={`rounded-full transition ${chartIndex === 1 ? 'bg-white w-3 h-3' : 'bg-gray-600 w-2 h-2'}`}
-              aria-label="Show second chart"
-            />
+            <div className="flex items-center justify-between py-3 border-b border-gray-700">
+              <p className="text-gray-300 text-sm">Savings Goal</p>
+              <span className="bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+                ON TRACK
+              </span>
+            </div>
 
-            <button
-              type="button"
-              onClick={() => setChartIndex((chartIndex + 1) % 2)}
-              className="text-gray-400 hover:text-teal-400 text-2xl transition px-2"
-            >
-              →
-            </button>
-          </div>
-        </div>
-
-        {/* Section 4: Recent activity */}
-        <div
-          className="bg-gray-800 rounded-2xl p-6 animate-fade-in-up"
-          style={{ animationDelay: '300ms' }}
-        >
-          <h2 className="text-white font-bold text-lg mb-4">Recent Activity</h2>
-
-          {recentExpenses.length === 0 ? (
-            <p className="text-gray-400">No expenses yet.</p>
-          ) : (
-            recentExpenses.map((expense) => (
-              <div
-                key={expense.id}
-                className="flex justify-between items-center py-3 border-b border-gray-700 last:border-0"
+            <div className="flex items-center justify-between py-3 border-b border-gray-700">
+              <p className="text-gray-300 text-sm">Overall Spending</p>
+              <span
+                className={`text-white text-xs font-bold px-2 py-1 rounded-full ${
+                  dashboard.status === 'On Track'
+                    ? 'bg-green-500'
+                    : dashboard.status === 'Close to Limit'
+                      ? 'bg-yellow-500'
+                      : 'bg-red-500'
+                }`}
               >
-                <div>
-                  <p className="text-white font-semibold">{expense.category}</p>
-                  <p className="text-gray-400 text-sm">{expense.date}</p>
-                </div>
+                {dashboard.status === 'On Track'
+                  ? 'AHEAD'
+                  : dashboard.status === 'Close to Limit'
+                    ? 'CAUTION'
+                    : 'ALERT'}
+              </span>
+            </div>
 
-                <div className="text-right">
-                  <p className="text-orange-400 font-semibold">
-                    -{fmt(expense.amount)}
-                  </p>
-                  {expense.note ? (
-                    <p className="text-gray-500 text-xs">{expense.note}</p>
-                  ) : null}
-                </div>
-              </div>
-            ))
-          )}
+            <div className="flex items-center justify-between py-3 border-b border-gray-700 last:border-0">
+              <p className="text-gray-300 text-sm">Daily Budget</p>
+              <p className="text-teal-400 font-semibold text-sm">
+                {fmt(dashboard.safe_daily_spend)}/day remaining
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
