@@ -200,7 +200,10 @@ function Dashboard() {
     <div className="bg-gray-950 min-h-screen -m-6 p-6">
       <div className="max-w-4xl mx-auto px-4 py-8 space-y-6">
         {/* Section 1: Hero banner */}
-        <div className="bg-gradient-to-r from-teal-500 to-blue-600 rounded-2xl p-8">
+        <div
+          className="bg-gradient-to-r from-teal-500 to-blue-600 rounded-2xl p-8 animate-fade-in-up"
+          style={{ animationDelay: '0ms' }}
+        >
           <p className="text-sm text-white/80">Available to Spend</p>
           <h1 className="text-5xl font-bold text-white mt-2">
             {fmt(dashboard.remaining_safe_to_spend)}
@@ -221,7 +224,10 @@ function Dashboard() {
         </div>
 
         {/* Section 2: Summary cards */}
-        <div className="grid grid-cols-2 gap-4">
+        <div
+          className="grid grid-cols-2 gap-4 animate-fade-in-up"
+          style={{ animationDelay: '100ms' }}
+        >
           <div className="bg-gray-800 rounded-2xl p-5">
             <p className="text-gray-400 text-sm">Monthly Income</p>
             <p className="text-2xl font-bold text-white mt-1">
@@ -252,13 +258,16 @@ function Dashboard() {
         </div>
 
         {/* Section 3: Chart carousel */}
-        <div className="bg-gray-800 rounded-2xl p-6">
+        <div
+          className="bg-gray-800 rounded-2xl p-6 border border-gray-700 animate-fade-in-up"
+          style={{ animationDelay: '200ms' }}
+        >
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-white font-bold">Spending Overview</h2>
             <p className="text-white font-bold">{chartIndex + 1}/2</p>
           </div>
 
-          <div style={{ height: '280px' }}>
+          <div className="rounded-xl bg-gray-900 p-4" style={{ height: '300px' }}>
             {chartIndex === 0 ? (
               <Doughnut data={doughnutData} options={doughnutOptions} />
             ) : (
@@ -266,11 +275,11 @@ function Dashboard() {
             )}
           </div>
 
-          <div className="mt-4 flex items-center justify-center gap-4">
+          <div className="mt-5 flex items-center justify-center gap-3">
             <button
               type="button"
               onClick={() => setChartIndex((chartIndex - 1 + 2) % 2)}
-              className="text-white text-xl px-3 py-1 hover:text-teal-400 transition"
+              className="text-gray-400 hover:text-teal-400 text-2xl transition px-2"
             >
               ←
             </button>
@@ -278,20 +287,20 @@ function Dashboard() {
             <button
               type="button"
               onClick={() => setChartIndex(0)}
-              className={`w-3 h-3 rounded-full ${chartIndex === 0 ? 'bg-white' : 'bg-gray-600'}`}
+              className={`rounded-full transition ${chartIndex === 0 ? 'bg-white w-3 h-3' : 'bg-gray-600 w-2 h-2'}`}
               aria-label="Show first chart"
             />
             <button
               type="button"
               onClick={() => setChartIndex(1)}
-              className={`w-3 h-3 rounded-full ${chartIndex === 1 ? 'bg-white' : 'bg-gray-600'}`}
+              className={`rounded-full transition ${chartIndex === 1 ? 'bg-white w-3 h-3' : 'bg-gray-600 w-2 h-2'}`}
               aria-label="Show second chart"
             />
 
             <button
               type="button"
               onClick={() => setChartIndex((chartIndex + 1) % 2)}
-              className="text-white text-xl px-3 py-1 hover:text-teal-400 transition"
+              className="text-gray-400 hover:text-teal-400 text-2xl transition px-2"
             >
               →
             </button>
@@ -299,7 +308,10 @@ function Dashboard() {
         </div>
 
         {/* Section 4: Recent activity */}
-        <div className="bg-gray-800 rounded-2xl p-6">
+        <div
+          className="bg-gray-800 rounded-2xl p-6 animate-fade-in-up"
+          style={{ animationDelay: '300ms' }}
+        >
           <h2 className="text-white font-bold text-lg mb-4">Recent Activity</h2>
 
           {recentExpenses.length === 0 ? (
