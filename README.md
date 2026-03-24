@@ -3,7 +3,9 @@
 A full-stack personal finance app that helps users understand exactly how much they can safely spend while staying on track with their monthly savings goal.
 
 ## Live Demo
-git clone https://github.com/Hondavzla/safe-to-spend.git
+[Frontend](https://safe-to-spend-frontend.onrender.com)
+[Backend API](https://safe-to-spend.onrender.com)
+
 
 ## Screenshots
 (screenshots coming soon)
