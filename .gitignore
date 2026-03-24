@@ -11,3 +11,5 @@ instance/
 
 # Environment variables
 .env
+mcp.json
+design.md
