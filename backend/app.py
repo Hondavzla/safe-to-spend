@@ -275,11 +275,9 @@ def get_dashboard():
     return jsonify(dashboard_data), 200
 
 
-# Entry point for local development.
-if __name__ == "__main__":
-    # Create database tables if they do not already exist.
-    with app.app_context():
-        db.create_all()
+# Must run on every startup including Render
+with app.app_context():
+    db.create_all()
 
-    # Start Flask's development server.
+if __name__ == "__main__":
     app.run(debug=True)
